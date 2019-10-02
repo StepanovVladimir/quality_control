@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
 		if (result == expectedResult)
 		{
-			testResults << testNumber << " sucсess;\n";
+			testResults << testNumber << " success;\n";
 		}
 		else
 		{

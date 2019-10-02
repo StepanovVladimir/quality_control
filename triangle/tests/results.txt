@@ -1,7 +1,7 @@
-1 sucñess;
-2 sucñess;
-3 sucñess;
-4 sucñess;
-5 sucñess;
-6 sucñess;
-7 sucñess;
+1 success;
+2 success;
+3 success;
+4 success;
+5 success;
+6 success;
+7 success;
