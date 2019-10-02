@@ -1,0 +1,14 @@
+2
+Unknown error
+a 4 5
+Unknown error
+-2 4 5
+Unknown error
+2 4 6
+Not a triangle
+4 4 4
+Equilateral
+2 4 4
+Isosceles
+2 4 5
+Usual
