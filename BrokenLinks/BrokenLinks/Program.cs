@@ -39,33 +39,35 @@ namespace BrokenLinks
             try
             {
                 WriteLink(uri.ToString(), (HttpWebResponse)request.GetResponse(), validLinks);
-                WebClient client = new WebClient();
-                string source = client.DownloadString(uri);
-
-                HtmlParser parser = new HtmlParser();
-                IHtmlDocument document = parser.ParseDocument(source);
-
-                foreach (IElement element in document.QuerySelectorAll("a"))
-                {
-                    string hrefTag = element.GetAttribute("href");
-
-                    if (hrefTag == null || hrefTag == "#" || hrefTag.Substring(0, 8) == "https://")
-                    {
-                        continue;
-                    }
-
-                    Uri newUri = new Uri(uri, hrefTag);
-                    if (uris.Add(newUri.ToString()))
-                    {
-                        RecursiveCheck(validLinks, invalidLinks, uris, newUri);
-                    }
-                }
+                request.Abort();
             }
             catch (WebException exc)
             {
                 WriteLink(uri.ToString(), (HttpWebResponse)exc.Response, invalidLinks);
+                request.Abort();
+                return;
             }
-            request.Abort();
+
+            WebClient client = new WebClient();
+            string source = client.DownloadString(uri);
+            HtmlParser parser = new HtmlParser();
+            IHtmlDocument document = parser.ParseDocument(source);
+
+            foreach (IElement element in document.QuerySelectorAll("a"))
+            {
+                string hrefTag = element.GetAttribute("href");
+
+                if (hrefTag == null || hrefTag == "#" || hrefTag.Substring(0, 8) == "https://")
+                {
+                    continue;
+                }
+
+                Uri newUri = new Uri(uri, hrefTag);
+                if (uris.Add(newUri.ToString()))
+                {
+                    RecursiveCheck(validLinks, invalidLinks, uris, newUri);
+                }
+            }
         }
 
         private static void WriteLink(string uri, HttpWebResponse response, FileStream fileStream)
