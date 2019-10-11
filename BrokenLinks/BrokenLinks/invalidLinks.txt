@@ -1,0 +1,10 @@
+http://52.136.215.164/links/locked.php 423 423
+http://52.136.215.164/links/movedper.php 301 MovedPermanently
+http://52.136.215.164/links/404not404found404.php 404 NotFound
+http://52.136.215.164/links/found302.php 302 Redirect
+http://52.136.215.164/links/return500bad.php 500 InternalServerError
+http://52.136.215.164/links/deny403forbidden.php 403 Forbidden
+http://52.136.215.164/links/502gateaway502.php 502 BadGateway
+http://52.136.215.164/links/teapot418.php 500 InternalServerError
+http://52.136.215.164/links/un503availible.php 503 ServiceUnavailable
+http://52.136.215.164/links/access401unauthorized.php 401 Unauthorized
