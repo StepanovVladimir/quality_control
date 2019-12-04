@@ -30,19 +30,17 @@ namespace ApiTests
 
         public ResponseData AddProduct(Product product)
         {
-            string json = JsonSerializer.Serialize(product);
+            return PostProduct("http://52.136.215.164:9000/api/addproduct", product);
+        }
 
-            WebRequest request = WebRequest.Create("http://52.136.215.164:9000/api/addproduct");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            using (Stream stream = request.GetRequestStream())
-            {
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.Write(json);
-                }
-            }
+        public ResponseData EditProduct(Product product)
+        {
+            return PostProduct("http://52.136.215.164:9000/api/editproduct", product);
+        }
 
+        public ResponseData DeleteProduct(int id)
+        {
+            WebRequest request = WebRequest.Create("http://52.136.215.164:9000/api/deleteproduct?id=" + id.ToString());
             WebResponse response = request.GetResponse();
             ResponseData data;
             using (Stream stream = response.GetResponseStream())
@@ -59,9 +57,21 @@ namespace ApiTests
             return data;
         }
 
-        public ResponseData DeleteProduct(int id)
+        private ResponseData PostProduct(string uri, Product product)
         {
-            WebRequest request = WebRequest.Create("http://52.136.215.164:9000/api/deleteproduct?id=" + id.ToString());
+            string json = JsonSerializer.Serialize(product);
+
+            WebRequest request = WebRequest.Create(uri);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            using (Stream stream = request.GetRequestStream())
+            {
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.Write(json);
+                }
+            }
+
             WebResponse response = request.GetResponse();
             ResponseData data;
             using (Stream stream = response.GetResponseStream())

@@ -43,6 +43,21 @@ namespace ApiTests
             apiWorker.DeleteProduct(data.id);
         }
 
+        [TestMethod]
+        public void EditProduct_ChangeTitle_TitleHasChanged()
+        {
+            Product product = CreateSomeProduct();
+            ResponseData data = apiWorker.AddProduct(product);
+            product.id = data.id.ToString();
+            product.title = ConfigurationManager.AppSettings["title2"];
+
+            apiWorker.EditProduct(product);
+
+            Assert.AreEqual(apiWorker.GetProduct(data.id).title, product.title);
+
+            apiWorker.DeleteProduct(data.id);
+        }
+
         private ApiWorker apiWorker = new ApiWorker();
 
         private Product CreateSomeProduct()
@@ -50,7 +65,7 @@ namespace ApiTests
             return new Product
             {
                 category_id = ConfigurationManager.AppSettings["category_id"],
-                title = ConfigurationManager.AppSettings["title"],
+                title = ConfigurationManager.AppSettings["title1"],
                 content = ConfigurationManager.AppSettings["content"],
                 price = ConfigurationManager.AppSettings["price"],
                 old_price = ConfigurationManager.AppSettings["old_price"],
