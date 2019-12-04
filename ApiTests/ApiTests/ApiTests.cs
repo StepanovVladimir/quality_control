@@ -14,7 +14,8 @@ namespace ApiTests
 
             ResponseData data = apiWorker.AddProduct(product);
 
-            Assert.AreEqual(apiWorker.GetProduct(data.id).title, product.title);
+            product.alias = ConfigurationManager.AppSettings["alias1"];
+            AssertProducts(product, apiWorker.GetProduct(data.id));
 
             apiWorker.DeleteProduct(data.id);
         }
@@ -32,18 +33,6 @@ namespace ApiTests
         }
 
         [TestMethod]
-        public void AddProduct_SomeProduct_AliasHasCreated()
-        {
-            Product product = CreateSomeProduct();
-
-            ResponseData data = apiWorker.AddProduct(product);
-
-            Assert.AreEqual(apiWorker.GetProduct(data.id).alias, ConfigurationManager.AppSettings["alias"]);
-
-            apiWorker.DeleteProduct(data.id);
-        }
-
-        [TestMethod]
         public void EditProduct_ChangeTitle_TitleHasChanged()
         {
             Product product = CreateSomeProduct();
@@ -53,10 +42,13 @@ namespace ApiTests
 
             apiWorker.EditProduct(product);
 
-            Assert.AreEqual(apiWorker.GetProduct(data.id).title, product.title);
+            product.alias = ConfigurationManager.AppSettings["alias2"];
+            AssertProducts(product, apiWorker.GetProduct(data.id));
 
             apiWorker.DeleteProduct(data.id);
         }
+
+
 
         private ApiWorker apiWorker = new ApiWorker();
 
@@ -74,6 +66,20 @@ namespace ApiTests
                 description = ConfigurationManager.AppSettings["description"],
                 hit = ConfigurationManager.AppSettings["hit"]
             };
+        }
+
+        private void AssertProducts(Product product1, Product product2)
+        {
+            Assert.AreEqual(product1.category_id, product2.category_id);
+            Assert.AreEqual(product1.title, product2.title);
+            Assert.AreEqual(product1.alias, product2.alias);
+            Assert.AreEqual(product1.content, product2.content);
+            Assert.AreEqual(product1.price, product2.price);
+            Assert.AreEqual(product1.old_price, product2.old_price);
+            Assert.AreEqual(product1.status, product2.status);
+            Assert.AreEqual(product1.keywords, product2.keywords);
+            Assert.AreEqual(product1.description, product2.description);
+            Assert.AreEqual(product1.hit, product2.hit);
         }
     }
 }
