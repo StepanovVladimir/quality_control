@@ -1,0 +1,3 @@
+﻿category_id, title, content, price, old_price, status, keywords, description, hit, alias
+"14", "Stepanov's title 2", "Content 2", "0", "1.11", "0", "Keywords 2", "Description 2", "0", "stepanov-s-title-2"
+"7", "", "", "1.11", "0", "1", "", "", "0", ""
